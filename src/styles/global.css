@@ -1,0 +1,112 @@
+/* Fonts chosen for readability (dyslexia-friendly):
+   Lexend for headings, Atkinson Hyperlegible Next for body,
+   Atkinson Hyperlegible Mono for numerals. All self-hosted. */
+@import '@fontsource-variable/lexend';
+@import '@fontsource-variable/atkinson-hyperlegible-next';
+@import '@fontsource-variable/atkinson-hyperlegible-next/wght-italic.css';
+@import '@fontsource-variable/atkinson-hyperlegible-mono';
+
+:root {
+  /* Palette: deep plum, violet, hot pink, rose */
+  --plum: #170b33;
+  --violet: #6c2bff;
+  --violet-dark: #5520d6;
+  --pink: #ff2e88; /* borders, underlines, large text only */
+  --pink-text: #c70f63; /* pink for small text (passes contrast) */
+  --rose: #ff9ccb; /* on plum backgrounds only */
+
+  --ground: #fbfafe;
+  --band: #f2effa;
+  --paper: #ffffff;
+  --ink: var(--plum);
+  --body: #2f2850;
+  --muted: #5b5378;
+  --rule: #dcd6ec;
+  --grid: #ece8f6;
+  --on-dark: #f4f1ff;
+  --on-dark-muted: #cfc8ea;
+  --dark-rule: #3d2e66;
+
+  --font-display: 'Lexend Variable', 'Lexend', Verdana, sans-serif;
+  --font-body: 'Atkinson Hyperlegible Next Variable', 'Atkinson Hyperlegible Next', Verdana, system-ui, sans-serif;
+  --font-mono: 'Atkinson Hyperlegible Mono Variable', 'Atkinson Hyperlegible Mono', ui-monospace, monospace;
+
+  --radius: 12px;
+  --wrap: 1200px;
+  --gutter: 32px;
+}
+
+@media (max-width: 640px) {
+  :root { --gutter: 20px; }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--ink); }
+a:hover { color: var(--violet); }
+:focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; }
+
+.wrap { max-width: var(--wrap); margin: 0 auto; padding-inline: var(--gutter); }
+
+.blueprint {
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: -1px -1px;
+}
+
+/* Small labels: sentence case, bold, no wide tracking. */
+.label {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 22px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 17px;
+  text-decoration: none;
+  border: 1.5px solid var(--pink);
+  background: var(--paper);
+  color: var(--pink-text);
+}
+.btn:hover { background: #fff0f6; color: var(--pink-text); }
+.btn--primary { background: var(--violet); border-color: var(--violet); color: #fff; }
+.btn--primary:hover { background: var(--violet-dark); border-color: var(--violet-dark); color: #fff; }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}

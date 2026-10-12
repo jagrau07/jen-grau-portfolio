@@ -1,0 +1,25 @@
+---
+import { site } from '../data/site';
+---
+
+<footer class="wrap">
+  <div>
+    <span>{site.name} · {site.location}</span>
+    <a href={site.linkedin} rel="me">Connect on LinkedIn</a>
+  </div>
+</footer>
+
+<style>
+  footer { padding-block: 0 56px; }
+  div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    font-size: 15px;
+    color: var(--muted);
+  }
+  a { color: var(--muted); }
+</style>

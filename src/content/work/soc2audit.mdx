@@ -1,0 +1,39 @@
+---
+title: "soc2audit: evidence collection as a CLI"
+order: 2
+context: Professional · Compliance tooling
+summary: SOC 2 evidence collection is the same work every quarter. I turned it into a tool, and deliberately stopped short of making it unattended.
+call: A CLI before a scheduled job, because the review is the point.
+role: Designer, builder, operator
+builtWith: Go, CI pipeline, cross-platform binaries
+principle: Human in the loop · Build for the handoff
+differently: Define up front what the tool is not responsible for. That boundary is clear to me because I built it, and that’s exactly the kind of knowledge that doesn’t survive a handoff unless it’s written down.
+---
+
+## The situation
+
+SOC 2 evidence collection is largely the same work every quarter and every year. Pull the data, assemble it, format it so an auditor can read it, do it again next cycle. I was doing a substantial share of it by hand.
+
+## What I built
+
+A command-line tool in Go that collects audit evidence programmatically from the systems that hold it, produces output that is tamper resistant and legible to auditors, and renders an HTML dashboard for summary views. It ships as cross-platform binaries, built through a CI pipeline, with usage documentation.
+
+<Decision
+  heading="Why a CLI and not an automated job"
+  obvious="Schedule a job that files the reports and moves on."
+  instead="Ship the executable first. Get collection and review right. Schedule later."
+>
+
+Audits require a human in the loop, and I wanted the tool to be honest about that. The tool generates evidence; I handle quality control and follow-up, and that second part is not mechanical.
+
+A vulnerability report is the clearest example. The report is data. What I’m reading it for is whether we’re losing momentum on remediation, or whether a higher-severity finding is drifting outside what policy allows. Those are judgments about trend and tolerance. A job that files the report would produce the artifact and miss the point of looking at it.
+
+</Decision>
+
+## Built for a handoff
+
+Why binaries and documentation for a tool with one user? Because I was the only user at the time, not because I expected to be the only user. If I changed roles or was unavailable, someone should be able to pick it up and run it without reading Go. That’s also why it builds through CI rather than on my machine.
+
+## What’s next
+
+The tool can be plugged into scheduled tasks that run defined reports, and that’s the natural next step. I haven’t done it yet, because getting the collection and the review right mattered more than getting it unattended.

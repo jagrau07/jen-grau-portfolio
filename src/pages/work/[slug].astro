@@ -1,0 +1,170 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Decision from '../../components/Decision.astro';
+
+export async function getStaticPaths() {
+  const all = (await getCollection('work', ({ data }) => !data.draft)).sort(
+    (a, b) => a.data.order - b.data.order,
+  );
+  return all.map((entry, i) => ({
+    params: { slug: entry.id },
+    props: { entry, prev: all[i - 1], next: all[i + 1] },
+  }));
+}
+
+const { entry, prev, next } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+---
+
+<Base title={d.title} description={d.summary} backLink>
+  <section class="blueprint title-block">
+    <div class="wrap inner">
+      <p class="label kicker"><span class="accent">Case study</span> · {d.context}</p>
+      <h1 class="display">{d.title}</h1>
+      <p class="lede">{d.summary}</p>
+      <dl class="meta">
+        <div><dt class="label">Role</dt><dd>{d.role}</dd></div>
+        <div><dt class="label">Built with</dt><dd>{d.builtWith}</dd></div>
+        <div><dt class="label">Principle</dt><dd>{d.principle}</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <article class="wrap body">
+    <div class="prose">
+      <Content components={{ Decision }} />
+    </div>
+
+    <section class="differently">
+      <h2>What I’d do differently</h2>
+      <p class="display">{d.differently}</p>
+    </section>
+
+    <nav class="pager" aria-label="More case studies">
+      {prev ? (
+        <a href={`/work/${prev.id}/`}>
+          <span class="label">Previous</span>
+          <span class="display">{prev.data.title}</span>
+        </a>
+      ) : <span />}
+      {next ? (
+        <a href={`/work/${next.id}/`}>
+          <span class="label">Next</span>
+          <span class="display">{next.data.title}</span>
+        </a>
+      ) : (
+        <a href="/#contact">
+          <span class="label">That’s all five</span>
+          <span class="display">Let’s talk</span>
+        </a>
+      )}
+    </nav>
+  </article>
+</Base>
+
+<style>
+  .accent { color: var(--violet); }
+  .title-block { border-bottom: 1px solid var(--rule); }
+  .inner { padding-block: 88px 72px; display: flex; flex-direction: column; gap: 26px; }
+  .kicker { margin: 0; font-size: 16px; }
+  h1 { margin: 0; max-width: 960px; font-size: clamp(34px, 5vw, 66px); line-height: 1.15; }
+  .lede { margin: 0; max-width: 680px; font-size: 20px; color: var(--body); }
+  .meta {
+    margin: 14px 0 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+    border: 1.5px solid var(--plum);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--paper);
+  }
+  .meta div { padding: 18px 22px; display: flex; flex-direction: column; gap: 4px; border-right: 1px solid var(--rule); }
+  .meta div:last-child { border-right: 0; }
+  .meta dd { margin: 0; font-size: 17px; }
+  @media (max-width: 640px) {
+    .inner { padding-block: 56px 48px; }
+    .lede { font-size: 18px; }
+    .meta div { border-right: 0; border-bottom: 1px solid var(--rule); }
+    .meta div:last-child { border-bottom: 0; }
+  }
+
+  .body { padding-block: 80px 48px; display: flex; flex-direction: column; gap: 64px; }
+
+  /* Markdown body: section headings in a left column, text on the right. */
+  .prose {
+    display: grid;
+    grid-template-columns: minmax(180px, 1fr) minmax(0, 3fr);
+    column-gap: 56px;
+    line-height: 1.75;
+    color: var(--body);
+  }
+  .prose > :global(*) { grid-column: 2; max-width: 680px; margin: 0 0 1em; }
+  .prose > :global(h2) {
+    grid-column: 1;
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 1.4;
+    color: var(--violet);
+  }
+  .prose > :global(h2:not(:first-child)),
+  .prose > :global(h2:not(:first-child) + *) { margin-top: 48px; }
+  .prose > :global(.decision) { grid-column: 1 / -1; max-width: none; margin-block: 56px 8px; }
+  .prose > :global(.decision + h2),
+  .prose > :global(.decision + h2 + *) { margin-top: 56px; }
+  .prose :global(ul), .prose :global(ol) { padding-left: 1.3em; }
+  .prose :global(li) { margin-bottom: 0.6em; }
+  .prose :global(li::marker) { color: var(--muted); }
+  .prose :global(strong) { color: var(--ink); font-weight: 700; }
+  @media (max-width: 760px) {
+    .prose { display: block; }
+    .prose > :global(h2) { margin: 40px 0 8px !important; }
+    .prose > :global(h2:first-child) { margin-top: 0 !important; }
+    .prose > :global(h2 + *) { margin-top: 0 !important; }
+    .prose > :global(.decision) { margin-block: 40px; }
+  }
+
+  .differently {
+    display: grid;
+    grid-template-columns: minmax(180px, 1fr) minmax(0, 3fr);
+    gap: 12px 56px;
+    padding: 36px;
+    border-radius: 16px;
+    background: var(--band);
+  }
+  @media (max-width: 760px) { .differently { grid-template-columns: 1fr; padding: 28px 22px; } }
+  .differently h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 1.4;
+    color: var(--pink-text);
+  }
+  .differently p {
+    min-width: 0;
+    max-width: 720px;
+    margin: 0;
+    font-weight: 400;
+    font-size: clamp(20px, 2.2vw, 24px);
+    line-height: 1.5;
+    text-wrap: pretty;
+  }
+
+  .pager { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 16px; }
+  .pager a {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 24px;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    background: var(--paper);
+    text-decoration: none;
+  }
+  .pager a:hover { border-color: var(--violet); color: var(--ink); }
+  .pager .display { font-size: 20px; line-height: 1.35; }
+</style>

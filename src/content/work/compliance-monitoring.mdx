@@ -1,0 +1,43 @@
+---
+title: Automated compliance framework monitoring
+order: 1
+context: Professional · Compliance automation
+summary: Scheduled AI tasks that watch framework sources for change, compare what changed against our own controls, and report with a proposed impact level.
+call: The impact level is a proposal, not a verdict. Everything still reaches a person.
+role: Designer and reviewer
+builtWith: Scheduled AI tasks, prompts built from our control set
+principle: Human in the loop
+differently: The tiering rules came out of my own judgment about what matters. I’d rather derive them from a record of what actually turned out to matter over a few cycles.
+---
+
+## The situation
+
+Compliance frameworks change. Control language gets revised, requirements get added, interpretations shift. In a small organization nobody is watching for this full time, so you find out late, usually from an auditor or a customer questionnaire.
+
+The failure mode is not dramatic. It is quiet drift between what your policies say and what the framework now expects.
+
+## What I built
+
+A set of scheduled AI tasks that monitor framework sources for changes, compare what changed against our own controls and policies, and report the result to me with an impact level attached. The pipeline has three stages:
+
+1. **Detection.** Watch the sources for change.
+2. **Comparison.** Evaluate the change against our actual control set, not the framework in the abstract. The prompt is built from our controls and policies, so the question it answers is “does this affect us,” not “what changed.”
+3. **Reporting.** Return the finding with a proposed impact level.
+
+## Impact levels
+
+- **Informational.** Something changed; nothing on our side needs to move.
+- **Recommended action.** There is work to consider, on our timeline.
+- **Escalation.** A policy change is likely needed, and this needs attention now.
+
+<Decision
+  heading="Proposal, not verdict"
+  obvious="Let the system decide what matters and quietly drop the rest."
+  instead="Let it propose an impact level. Every item still passes through my review."
+>
+
+The value of the tiering is not that it decides anything. It orders my attention, so the escalations surface first and informational items don’t get the same scrutiny as the ones that matter. If the tag is wrong, the item is still in front of me.
+
+A system that only sorts is useful. A system that silently discards is a liability, because the cost of a missed escalation in compliance is not proportional to the cost of a false one.
+
+</Decision>

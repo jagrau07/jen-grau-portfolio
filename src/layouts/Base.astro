@@ -1,0 +1,84 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  backLink?: boolean;
+}
+
+const { title, description = site.description, backLink = false } = Astro.props;
+const fullTitle = title ? `${title} · ${site.name}` : `${site.name} · ${site.title}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="theme-color" content="#fbfafe" />
+  </head>
+  <body id="top">
+    <a class="skip" href="#main">Skip to content</a>
+    <Header backLink={backLink} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <a class="to-top" href="#top" aria-label="Back to top">
+      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7" /></svg>
+    </a>
+    <script>
+      // Show the back-to-top arrow only once the reader has scrolled down.
+      const toTop = document.querySelector<HTMLElement>('.to-top');
+      if (toTop) {
+        const update = () => toTop.classList.toggle('is-hidden', window.scrollY < 600);
+        update();
+        window.addEventListener('scroll', update, { passive: true });
+      }
+    </script>
+  </body>
+</html>
+
+<style>
+  .skip {
+    position: absolute;
+    left: 16px;
+    top: -60px;
+    padding: 10px 16px;
+    background: var(--ink);
+    color: var(--ground);
+    z-index: 10;
+  }
+  .skip:focus { top: 12px; }
+
+  .to-top {
+    position: fixed;
+    right: var(--gutter);
+    bottom: 24px;
+    z-index: 5;
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--plum);
+    color: var(--on-dark);
+    box-shadow: 0 4px 14px rgb(23 11 51 / 0.25);
+    transition: opacity 0.2s, transform 0.2s, background 0.2s;
+  }
+  .to-top:hover { background: var(--violet); color: var(--on-dark); }
+  .to-top.is-hidden { opacity: 0; transform: translateY(8px); pointer-events: none; visibility: hidden; }
+</style>

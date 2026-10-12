@@ -1,0 +1,35 @@
+---
+title: Roadmap and capacity planning tool
+order: 3
+context: Professional · Planning
+summary: Roadmap data in through Productboard or CSV, team capacity applied, timelines calculated per team, with baselines and scenario comparison.
+call: Make the alternative cheap to compare, so the argument stops being abstract.
+role: Designer and builder
+builtWith: Productboard integration, CSV import
+principle: Work in the seams
+differently: Capacity configuration is where the model is most sensitive and where I spent the least time on the interface. The numbers that drive everything else should be the easiest to question.
+---
+
+## The situation
+
+Planning ran on spreadsheets. The math was rudimentary and capacity planning was coarse, so conversations about what a team could actually absorb came down to impressions rather than anything you could inspect. A tool can be more fine-grained than a spreadsheet maintained by hand, and the planning deserved it.
+
+## What I built
+
+A planning tool that takes roadmap data through a Productboard integration or by CSV, applies a configuration that defines teams and their capacity, and calculates a timeline per team. It supports filtering by initiative or product, saving snapshots as baselines, and comparing scenarios against each other.
+
+<Decision
+  heading="The feature that changed the conversation"
+  obvious="A better roadmap view: what the plan is."
+  instead="Snapshots and scenario comparison: what happens if the plan changes."
+>
+
+A roadmap view tells you what the plan is. That’s useful once. What people actually argue about is the alternative: what happens if this team is smaller, if that initiative moves, if we sequence these two differently. Before, those arguments happened in the abstract, because rebuilding the spreadsheet for every hypothetical was too expensive to do live.
+
+Baselines made the comparison cheap. Take a snapshot of the current plan, change the inputs, and look at both. The tool stopped being a reporting artifact and became something you could think with.
+
+</Decision>
+
+## Why both an integration and CSV
+
+The integration keeps the tool current without anyone maintaining it by hand. CSV means you can model something that doesn’t exist in the system yet, and the tool doesn’t require everyone to work the way the integration expects. You can edit in place to build a scenario rather than pushing speculative data into the source of truth.

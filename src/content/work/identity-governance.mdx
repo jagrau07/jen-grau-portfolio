@@ -1,0 +1,35 @@
+---
+title: Identity governance across rotating administrators
+order: 5
+context: Volunteer · Identity
+summary: Roughly a hundred Microsoft 365 tenants, run by volunteer administrators who rotate every two years.
+call: Design for turnover instead of around it.
+role: Volunteer Information Specialist Chair, California state level
+builtWith: Microsoft 365, security groups, documented procedures
+principle: Build for the handoff
+differently: I started from the access problems in front of me and worked outward to the pattern. Starting over, I’d map the rotation cycle first and design against it, because almost every individual problem turned out to be the same problem.
+---
+
+## The situation
+
+The organization runs on separate Microsoft 365 tenants, roughly a hundred of them: one per chapter plus the state. Chapter administrators are volunteers who rotate with each administration, typically every two years.
+
+Most enterprise identity design assumes continuity: the admin who set something up will be around to explain it, and turnover is an exception to handle. Here, turnover is the normal state. Every access decision has a two-year clock on it, and the person who made it will be gone.
+
+The symptoms were predictable once you see the pattern. Administrative access held by people who had rotated out. Board members set up as guest accounts tied to personal email by an administrator who then left. New volunteers unable to get into their own chapter’s resources, with nobody remaining who knew how access had been granted.
+
+<Decision
+  heading="Who owns a hundred tenants"
+  obvious="Centralize administration at the state level."
+  instead="Give each chapter genuine ownership of its tenant, with the keys and documentation to match."
+>
+
+Centralizing would have been easier to control, and it would have made the state responsible for a hundred environments it can’t staff. Pushing ownership to the chapters, with a billing role for each chapter treasurer and a standing continuity path behind it, puts responsibility where the people are.
+
+</Decision>
+
+## What that looked like
+
+- **A standing emergency access path.** A dedicated state-level administrative account in each chapter tenant, so the organization is never locked out of its own resources when a volunteer leaves without a handoff. It exists for continuity, not day-to-day use.
+- **Membership-driven access instead of individual grants.** Access tied to a security group rather than one-off grants, with a recurring process to reconcile accounts against it and remove access that has gone stale for several cycles. Nobody has to remember who granted what.
+- **Documentation treated as infrastructure.** Onboarding materials and procedures, because in an environment with guaranteed turnover, documentation isn’t a courtesy. It’s the only thing that persists.

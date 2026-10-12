@@ -1,0 +1,43 @@
+---
+title: Retiring a decade of volunteer-built hosting
+order: 4
+context: Volunteer · Infrastructure
+summary: One aging server carried roughly two hundred chapter websites, the organization’s DNS and its mail routing. I retired it rather than rebuild it.
+call: The right answer wasn’t a better server. It was less server.
+role: Volunteer Information Specialist Chair, California state level
+builtWith: Cloudflare DNS, Pages and WAF
+principle: Build for the handoff
+differently: I’d map the DNS dependency at the start of planning rather than partway through. That one machine was doing three jobs, and that fact constrained the sequencing of everything else.
+---
+
+## Context
+
+I volunteer with the Daughters of the American Revolution as Volunteer Information Specialist Chair at the California state level, supporting a membership in the thousands across roughly two hundred chapter websites.
+
+## The situation
+
+All of those sites ran on one shared server, on a content management setup first built more than a decade ago. The same server was also the organization’s DNS nameserver, including the records that routed email.
+
+That combination is the whole problem. One machine carried the websites, the DNS and the mail routing, and it was maintained by volunteers who rotate out every couple of years. Keeping two hundred aging instances patched was work nobody had the time or the continuity to do. Every failure mode was organization-wide rather than chapter-sized.
+
+<Decision
+  heading="Retire, don’t rebuild"
+  obvious="Rebuild the server on fresh infrastructure."
+  instead="Retire it, and move toward a managed platform volunteers don’t have to run."
+>
+
+Restoring the same architecture would have re-created a single point of failure for websites, DNS and mail all at once, and handed it back to volunteers who can’t sustain it. We were also already evaluating a managed member platform. Rebuilding would have meant investing in infrastructure we intended to leave.
+
+</Decision>
+
+## What I did
+
+1. **Preserved the content first.** Extracted a full backup before anything was decommissioned, so nothing depended on the old server still being there.
+2. **Moved DNS off the server.** Repointed the registrar at Cloudflare nameservers and rebuilt the records there, including mail routing, so organizational email was unaffected by the shutdown.
+3. **Kept a web presence up.** Stood up a static site on Cloudflare Pages as an interim destination and routed the former chapter hostnames to it, so every chapter address resolved to something real.
+4. **Put the estate behind a WAF.** With DNS on Cloudflare, the organization gets protection at the edge it previously had no way to maintain itself.
+5. **Planned the transition, not just the teardown.** The interim site is explicitly interim. The managed platform is the destination, and the routing is built so chapters move to it without another disruption.
+
+## What this was really about
+
+The migration work was infrastructure. The decision was architectural. A volunteer organization with rotating leadership should not be running a server at all.
