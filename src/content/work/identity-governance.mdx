@@ -2,34 +2,42 @@
 title: Identity governance across rotating administrators
 order: 5
 context: Volunteer · Identity
-summary: Roughly a hundred Microsoft 365 tenants, run by volunteer administrators who rotate every two years.
-call: Design for turnover instead of around it.
+status: in-progress
+summary: Roughly a hundred Microsoft 365 tenants, each run by a chapter’s volunteer administrators who rotate every two years. I’m building the support structure around them.
+call: Keep each chapter on its own tenant, and put tiered support behind it.
 role: Volunteer Information Specialist Chair, California state level
-builtWith: Microsoft 365, security groups, documented procedures
+builtWith: Microsoft 365 nonprofit grants, SharePoint, tiered support, documentation
 principle: Build for the handoff
-differently: I started from the access problems in front of me and worked outward to the pattern. Starting over, I’d map the rotation cycle first and design against it, because almost every individual problem turned out to be the same problem.
+differently: I started from the access problems in front of me and worked outward to the pattern. If I were starting today, I’d map the rotation cycle first and design against it, because almost every individual problem has turned out to be the same problem.
 ---
 
 ## The situation
 
-The organization runs on separate Microsoft 365 tenants, roughly a hundred of them: one per chapter plus the state. Chapter administrators are volunteers who rotate with each administration, typically every two years.
+The organization runs on separate Microsoft 365 tenants, roughly a hundred of them: one per chapter plus the state. Each runs on its own Microsoft nonprofit grant. Chapter administrators are volunteers who rotate with each administration, typically every two years.
 
 Most enterprise identity design assumes continuity: the admin who set something up will be around to explain it, and turnover is an exception to handle. Here, turnover is the normal state. Every access decision has a two-year clock on it, and the person who made it will be gone.
 
-The symptoms were predictable once you see the pattern. Administrative access held by people who had rotated out. Board members set up as guest accounts tied to personal email by an administrator who then left. New volunteers unable to get into their own chapter’s resources, with nobody remaining who knew how access had been granted.
+The symptoms were predictable once you see the pattern. Administrative access held by people who had rotated out. Board members set up as guest accounts tied to personal email by an administrator who then left. New volunteers unable to get into their own chapter’s resources, with nobody remaining who knew how access had been granted. Technical skill varies widely from one chapter to the next, so the same problem lands very differently depending on who inherits it.
 
 <Decision
   heading="Who owns a hundred tenants"
-  obvious="Centralize administration at the state level."
-  instead="Give each chapter genuine ownership of its tenant, with the keys and documentation to match."
+  obvious="Consolidate the chapters into one state tenant and run it centrally."
+  instead="Keep each chapter on its own tenant and grant, with tiered support behind it."
 >
 
-Centralizing would have been easier to control, and it would have made the state responsible for a hundred environments it can’t staff. Pushing ownership to the chapters, with a billing role for each chapter treasurer and a standing continuity path behind it, puts responsibility where the people are.
+The membership is over 10,000, and a single grant covers up to 300 licenses. Separate grants give every chapter its own allowance, so keeping them apart is to everyone’s benefit. What the chapters need isn’t consolidation. It’s backup: someone to call, documentation written for their skill level, and a path back in when a volunteer leaves without a handoff.
 
 </Decision>
 
-## What that looked like
+## What I’m putting in place
 
+- **Three tiers of support.** Chapter ownership: each chapter runs its own tenant. District support: the first place a chapter turns for help. State support: escalation, standards and continuity.
 - **A standing emergency access path.** A dedicated state-level administrative account in each chapter tenant, so the organization is never locked out of its own resources when a volunteer leaves without a handoff. It exists for continuity, not day-to-day use.
-- **Membership-driven access instead of individual grants.** Access tied to a security group rather than one-off grants, with a recurring process to reconcile accounts against it and remove access that has gone stale for several cycles. Nobody has to remember who granted what.
-- **Documentation treated as infrastructure.** Onboarding materials and procedures, because in an environment with guaranteed turnover, documentation isn’t a courtesy. It’s the only thing that persists.
+- **Documentation for every tier and skill level.** In an environment with guaranteed turnover, documentation isn’t a courtesy. It’s the only thing that persists, so it has to work for the least technical person who might inherit the job.
+- **Invoice billing instead of credit cards.** I’m working with Microsoft to move chapter accounts from credit card billing to invoicing. A card on file has to be kept current, and that is exactly the kind of task that gets missed when a treasurer changes.
+
+## What comes next
+
+Separate tenants only pay off if chapters use them. Next is a campaign to show chapters what they already have: SharePoint and document storage give each chapter a reliable place to manage and archive its records, and a web presence only its members can reach.
+
+The [shared server I retired](/work/retiring-legacy-hosting/) is the counterexample. Chapter content lived on infrastructure nobody could maintain. A managed platform the chapter owns, with support behind it, is the opposite of that.

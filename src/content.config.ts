@@ -14,6 +14,7 @@ const work = defineCollection({
     builtWith: z.string(),
     principle: z.string(),
     differently: z.string(), // "What I'd do differently", shown as the closing pull quote
+    status: z.enum(['complete', 'in-progress']).default('complete'),
     draft: z.boolean().default(false),
   }),
 });

@@ -21,7 +21,7 @@ const d = entry.data;
 <Base title={d.title} description={d.summary} backLink>
   <section class="blueprint title-block">
     <div class="wrap inner">
-      <p class="label kicker"><span class="accent">Case study</span> · {d.context}</p>
+      <p class="label kicker"><span class="accent">Case study</span> · {d.context}{d.status === 'in-progress' && ' · In progress'}</p>
       <h1 class="display">{d.title}</h1>
       <p class="lede">{d.summary}</p>
       <dl class="meta">
@@ -38,7 +38,7 @@ const d = entry.data;
     </div>
 
     <section class="differently">
-      <h2>What I’d do differently</h2>
+      <h2>{d.status === 'in-progress' ? 'What I’m learning so far' : 'What I’d do differently'}</h2>
       <p class="display">{d.differently}</p>
     </section>
 

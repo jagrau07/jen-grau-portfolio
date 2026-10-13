@@ -135,7 +135,10 @@ const timeline = [
           <li>
             <a href={`/work/${s.id}/`}>
               <div class="main">
-                <span class="label">{s.data.context}</span>
+                <span class="label">
+                  {s.data.context}
+                  {s.data.status === 'in-progress' && <span class="status">In progress</span>}
+                </span>
                 <span class="title display">{s.data.title}</span>
                 <span class="summary">{s.data.summary}</span>
               </div>
@@ -293,6 +296,7 @@ const timeline = [
     line-height: 1.6;
     color: var(--body);
   }
+  .status { margin-left: 10px; padding: 2px 10px; border: 1.5px solid var(--violet); border-radius: 999px; font-size: 13px; color: var(--violet); white-space: nowrap; }
   .call__label { display: block; font-size: 14px; font-weight: 700; color: var(--pink-text); margin-bottom: 4px; }
   .arrow { flex: 0 0 auto; margin-top: 2px; transition: transform 0.15s ease; }
   .studies a:hover .arrow { transform: translateX(4px); }
