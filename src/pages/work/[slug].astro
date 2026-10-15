@@ -18,7 +18,7 @@ const { Content } = await render(entry);
 const d = entry.data;
 ---
 
-<Base title={d.title} description={d.summary} backLink>
+<Base title={d.title} description={d.summary} backLink ogType="article">
   <section class="blueprint title-block">
     <div class="wrap inner">
       <p class="label kicker"><span class="accent">Case study</span> · {d.context}{d.status === 'in-progress' && ' · In progress'}</p>

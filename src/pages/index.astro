@@ -10,6 +10,28 @@ const studies = (await getCollection('work', ({ data }) => !data.draft)).sort(
   (a, b) => a.data.order - b.data.order,
 );
 
+// Machine-readable profile for search engines (schema.org Person).
+const profile = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  jobTitle: 'Technical Program Leader',
+  description: site.description,
+  url: new URL('/', Astro.site).href,
+  image: new URL('/jen-grau.jpg', Astro.site).href,
+  sameAs: [site.linkedin],
+  address: { '@type': 'PostalAddress', addressLocality: 'San Diego', addressRegion: 'CA', addressCountry: 'US' },
+  alumniOf: { '@type': 'CollegeOrUniversity', name: 'University of California San Diego' },
+  knowsAbout: [
+    'Technical program management',
+    'Governance, risk and compliance',
+    'SOC 2',
+    'Enterprise architecture',
+    'Engineering operations',
+    'AI-enabled tooling',
+  ],
+};
+
 const tags = [
   'Executive Partnership',
   'Engineering Operations',
@@ -69,6 +91,7 @@ const timeline = [
 ---
 
 <Base>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(profile)} />
   <!-- Hero -->
   <section class="hero blueprint">
     <div class="wrap hero__inner">
