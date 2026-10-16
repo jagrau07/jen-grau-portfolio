@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   // Update if you add a custom domain in Cloudflare.
-  site: 'https://jengrau.pages.dev',
+  site: 'https://jengrau.me',
   output: 'static',
   trailingSlash: 'ignore',
   integrations: [mdx(), sitemap()],

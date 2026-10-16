@@ -1,11 +1,11 @@
 # Jen Grau — portfolio
 
-Astro static site, deployed to Cloudflare Pages at https://jengrau.pages.dev.
+Astro static site, deployed to Cloudflare Pages at https://jengrau.me (jengrau.pages.dev redirects there).
 
 ## Before the first deploy
 
 1. `src/data/site.ts` — LinkedIn URL. There is intentionally no email, phone or résumé on the site; LinkedIn is the contact path.
-2. `astro.config.mjs` — `site` is https://jengrau.pages.dev; change it if you add a custom domain.
+2. `astro.config.mjs` — `site` is https://jengrau.me. If the domain changes, update it here and in `functions/_middleware.js`.
 
 ## Run it locally
 
